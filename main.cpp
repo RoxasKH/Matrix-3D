@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
 
-#include "Matrice3D.h"
+#include "Matrix3D.h"
 
 using namespace std;
 
@@ -72,13 +72,13 @@ void test_default_constructor() {
 
     cout << "---- COSTRUTTORE DI DEFAULT ----" << endl;
 
-    Matrice3D<int> mat_int;
+    Matrix3D<int> mat_int;
     assert(mat_int.getFloors() == 0 && mat_int.getRows() == 0 && mat_int.getColumns() == 0);
 
-    Matrice3D<char> mat_char;
+    Matrix3D<char> mat_char;
     assert(mat_char.getFloors() == 0 && mat_char.getRows() == 0 && mat_char.getColumns() == 0);
 
-    Matrice3D<customType> mat_custom;
+    Matrix3D<customType> mat_custom;
     assert(mat_custom.getFloors() == 0 && mat_custom.getRows() == 0 && mat_custom.getColumns() == 0);
 
     cout << endl;
@@ -90,13 +90,13 @@ void test_secondary_constructor() {
 
     cout << "---- COSTRUTTORE SECONDARIO ----" << endl;
 
-    Matrice3D<int> uninitialized_mat_int(3, 3, 3);
+    Matrix3D<int> uninitialized_mat_int(3, 3, 3);
     assert(uninitialized_mat_int.getFloors() == 3 && uninitialized_mat_int.getRows() == 3 && uninitialized_mat_int.getColumns() == 3);
 
-    Matrice3D<char> uninitialized_mat_char(1, 10, 20);
+    Matrix3D<char> uninitialized_mat_char(1, 10, 20);
     assert(uninitialized_mat_char.getFloors() == 1 && uninitialized_mat_char.getRows() == 10 && uninitialized_mat_char.getColumns() == 20);
 
-    Matrice3D<customType> uninitialized_mat_custom(2, 3, 10);
+    Matrix3D<customType> uninitialized_mat_custom(2, 3, 10);
     assert(uninitialized_mat_custom.getFloors() == 2 && uninitialized_mat_custom.getRows() == 3 && uninitialized_mat_custom.getColumns() == 10);
 
     cout << endl;
@@ -110,7 +110,7 @@ void test_secondary_constructor_with_init() {
 
     bool value_correctly_initialized = true;
 
-    Matrice3D<int> initialized_mat_int(3, 3, 3, 0);
+    Matrix3D<int> initialized_mat_int(3, 3, 3, 0);
     assert(initialized_mat_int.getFloors() == 3 && initialized_mat_int.getRows() == 3 && initialized_mat_int.getColumns() == 3);
 
     value_correctly_initialized = true;
@@ -122,11 +122,11 @@ void test_secondary_constructor_with_init() {
 
     assert(value_correctly_initialized);
 
-    cout << "Stampa della Matrice3D<int> dopo costruttore di inizializzazione con valore 0" << endl;
+    cout << "Stampa della Matrix3D<int> dopo costruttore di inizializzazione con valore 0" << endl;
     cout << initialized_mat_int << endl;
 
 
-    Matrice3D<int> initialized_mat_int_five(3, 3, 3, 5);
+    Matrix3D<int> initialized_mat_int_five(3, 3, 3, 5);
     assert(initialized_mat_int_five.getFloors() == 3 && initialized_mat_int_five.getRows() == 3 && initialized_mat_int_five.getColumns() == 3);
 
     value_correctly_initialized = true;
@@ -138,11 +138,11 @@ void test_secondary_constructor_with_init() {
 
     assert(value_correctly_initialized);
 
-    cout << "Stampa della Matrice3D<int> dopo costruttore di inizializzazione con valore 5" << endl;
+    cout << "Stampa della Matrix3D<int> dopo costruttore di inizializzazione con valore 5" << endl;
     cout << initialized_mat_int_five << endl;
 
 
-    Matrice3D<char> initialized_mat_char(1, 10, 20, 'f');
+    Matrix3D<char> initialized_mat_char(1, 10, 20, 'f');
     assert(initialized_mat_char.getFloors() == 1 && initialized_mat_char.getRows() == 10 && initialized_mat_char.getColumns() == 20);
 
     value_correctly_initialized = true;
@@ -154,13 +154,13 @@ void test_secondary_constructor_with_init() {
 
     assert(value_correctly_initialized);
 
-    cout << "Stampa della Matrice3D<char> dopo costruttore di inizializzazione con valore 'f'" << endl;
+    cout << "Stampa della Matrix3D<char> dopo costruttore di inizializzazione con valore 'f'" << endl;
     cout << initialized_mat_char << endl;
 
 
     customType custom(8, 42, 'x');
 
-    Matrice3D<customType> initialized_mat_custom(2, 3, 10, custom);
+    Matrix3D<customType> initialized_mat_custom(2, 3, 10, custom);
     assert(initialized_mat_custom.getFloors() == 2 && initialized_mat_custom.getRows() == 3 && initialized_mat_custom.getColumns() == 10);
 
     value_correctly_initialized = true;
@@ -172,7 +172,7 @@ void test_secondary_constructor_with_init() {
 
     assert(value_correctly_initialized);
 
-    cout << "Stampa della Matrice3D<customType> dopo costruttore di inizializzazione con valore " << custom << endl;
+    cout << "Stampa della Matrix3D<customType> dopo costruttore di inizializzazione con valore " << custom << endl;
     cout << initialized_mat_custom << endl;
 
     cout << endl;
@@ -184,42 +184,42 @@ void test_copy_constructor() {
 
     cout << "---- COPY CONSTRUCTOR ----" << endl;
 
-    Matrice3D<int> initialized_mat_int(3, 3, 3, 0);
-    Matrice3D<char> initialized_mat_char(1, 10, 20, 'f');
+    Matrix3D<int> initialized_mat_int(3, 3, 3, 0);
+    Matrix3D<char> initialized_mat_char(1, 10, 20, 'f');
     customType custom(8, 42, 'x');
-    Matrice3D<customType> initialized_mat_custom(2, 3, 10, custom);
+    Matrix3D<customType> initialized_mat_custom(2, 3, 10, custom);
 
 
-    Matrice3D<int> copy_mat_int(initialized_mat_int);
+    Matrix3D<int> copy_mat_int(initialized_mat_int);
     assert(copy_mat_int.getFloors() == initialized_mat_int.getFloors() 
         && copy_mat_int.getRows() == initialized_mat_int.getRows() 
         && copy_mat_int.getColumns() == initialized_mat_int.getColumns());
 
     assert(copy_mat_int == initialized_mat_int);
 
-    cout << "Stampa della Matrice3D<int> creata a partire dalla precedente" << endl;
+    cout << "Stampa della Matrix3D<int> creata a partire dalla precedente" << endl;
     cout << copy_mat_int << endl;
 
 
-    Matrice3D<char> copy_mat_char(initialized_mat_char);
+    Matrix3D<char> copy_mat_char(initialized_mat_char);
     assert(copy_mat_char.getFloors() == initialized_mat_char.getFloors() 
         && copy_mat_char.getRows() == initialized_mat_char.getRows() 
         && copy_mat_char.getColumns() == initialized_mat_char.getColumns());
 
     assert(copy_mat_char == initialized_mat_char);
 
-    cout << "Stampa della Matrice3D<char> creata a partire dalla precedente" << endl;
+    cout << "Stampa della Matrix3D<char> creata a partire dalla precedente" << endl;
     cout << copy_mat_char << endl;
 
 
-    Matrice3D<customType> copy_mat_custom(initialized_mat_custom);
+    Matrix3D<customType> copy_mat_custom(initialized_mat_custom);
     assert(copy_mat_custom.getFloors() == initialized_mat_custom.getFloors() 
         && copy_mat_custom.getRows() == initialized_mat_custom.getRows() 
         && copy_mat_custom.getColumns() == initialized_mat_custom.getColumns());
 
     assert(copy_mat_custom == initialized_mat_custom);
 
-    cout << "Stampa della Matrice3D<customType> creata a partire dalla precedente" << endl;
+    cout << "Stampa della Matrix3D<customType> creata a partire dalla precedente" << endl;
     cout << copy_mat_custom << endl;
 
     cout << endl;
@@ -231,13 +231,13 @@ void test_assignment_operator() {
 
     cout << "---- OPERATORE D'ASSEGNAMENTO ----" << endl;
 
-    Matrice3D<int> initialized_mat_int(3, 3, 3, 0);
-    Matrice3D<char> initialized_mat_char(1, 10, 20, 'f');
+    Matrix3D<int> initialized_mat_int(3, 3, 3, 0);
+    Matrix3D<char> initialized_mat_char(1, 10, 20, 'f');
     customType custom(8, 42, 'x');
-    Matrice3D<customType> initialized_mat_custom(2, 3, 10, custom);
+    Matrix3D<customType> initialized_mat_custom(2, 3, 10, custom);
 
 
-    Matrice3D<int> assigned_mat_int;
+    Matrix3D<int> assigned_mat_int;
     assigned_mat_int = initialized_mat_int;
     assert(assigned_mat_int.getFloors() == initialized_mat_int.getFloors() 
         && assigned_mat_int.getRows() == initialized_mat_int.getRows() 
@@ -245,10 +245,10 @@ void test_assignment_operator() {
 
     assert(assigned_mat_int == initialized_mat_int);
 
-    cout << "Stampa della Matrice3D<int> a cui è stata assegnata la precedente" << endl;
+    cout << "Stampa della Matrix3D<int> a cui è stata assegnata la precedente" << endl;
     cout << assigned_mat_int << endl;
 
-    Matrice3D<char> assigned_mat_char;
+    Matrix3D<char> assigned_mat_char;
     assigned_mat_char = initialized_mat_char;
     assert(assigned_mat_char.getFloors() == initialized_mat_char.getFloors() 
         && assigned_mat_char.getRows() == initialized_mat_char.getRows() 
@@ -256,10 +256,10 @@ void test_assignment_operator() {
 
     assert(assigned_mat_char == initialized_mat_char);
 
-    cout << "Stampa della Matrice3D<char> a cui è stata assegnata la precedente" << endl;
+    cout << "Stampa della Matrix3D<char> a cui è stata assegnata la precedente" << endl;
     cout << assigned_mat_char << endl;
 
-    Matrice3D<customType> assigned_mat_custom;
+    Matrix3D<customType> assigned_mat_custom;
     assigned_mat_custom = initialized_mat_custom;
     assert(assigned_mat_custom.getFloors() == initialized_mat_custom.getFloors() 
         && assigned_mat_custom.getRows() == initialized_mat_custom.getRows() 
@@ -267,7 +267,7 @@ void test_assignment_operator() {
 
     assert(assigned_mat_custom == initialized_mat_custom);
 
-    cout << "Stampa della Matrice3D<customType> a cui è stata assegnata la precedente" << endl;
+    cout << "Stampa della Matrix3D<customType> a cui è stata assegnata la precedente" << endl;
     cout << assigned_mat_custom << endl;
 
     cout << endl;
@@ -279,27 +279,27 @@ void test_getter_setter() {
 
     cout << "---- ACCESSO IN LETTURA E SCRITTURA SULLA (Z, Y, X)-ESIMA CELLA ----" << endl;
 
-    Matrice3D<int> initialized_mat_int(3, 3, 3, 0);
-    Matrice3D<char> initialized_mat_char(1, 10, 20, 'f');
+    Matrix3D<int> initialized_mat_int(3, 3, 3, 0);
+    Matrix3D<char> initialized_mat_char(1, 10, 20, 'f');
     customType custom(8, 42, 'x');
-    Matrice3D<customType> initialized_mat_custom(2, 3, 10, custom);
+    Matrix3D<customType> initialized_mat_custom(2, 3, 10, custom);
 
 
     initialized_mat_int(1, 1, 1) = 5;
     assert(initialized_mat_int(1, 1, 1) == 5);
-    cout << "Stampa della Matrice3D<int> a cui è stato modificato il valore in posizione (1, 1, 1) in 0" << endl;
+    cout << "Stampa della Matrix3D<int> a cui è stato modificato il valore in posizione (1, 1, 1) in 0" << endl;
     cout << initialized_mat_int << endl;
 
     initialized_mat_char(0, 4, 7) = 'x';
     assert(initialized_mat_char(0, 4, 7) == 'x');
-    cout << "Stampa della Matrice3D<char> a cui è stato modificato il valore in posizione (0, 4, 7) in 'x'" << endl;
+    cout << "Stampa della Matrix3D<char> a cui è stato modificato il valore in posizione (0, 4, 7) in 'x'" << endl;
     cout << initialized_mat_char << endl;
 
     customType custom_zero(0, 0.0, 'O');
 
     initialized_mat_custom(1, 2, 9) = custom_zero;
     assert(initialized_mat_custom(1, 2, 9) == custom_zero);
-    cout << "Stampa della Matrice3D<customType> a cui è stato modificato il valore in posizione (1, 2, 9) in " << custom_zero << endl;
+    cout << "Stampa della Matrix3D<customType> a cui è stato modificato il valore in posizione (1, 2, 9) in " << custom_zero << endl;
     cout << initialized_mat_custom << endl;
 
     cout << endl;
@@ -311,10 +311,10 @@ void test_slice() {
 
     cout << "---- SLICE ----" << endl;
 
-    Matrice3D<int> initialized_mat_int(3, 3, 3, 0);
-    Matrice3D<char> initialized_mat_char(1, 10, 20, 'f');
+    Matrix3D<int> initialized_mat_int(3, 3, 3, 0);
+    Matrix3D<char> initialized_mat_char(1, 10, 20, 'f');
     customType custom(8, 42, 'x');
-    Matrice3D<customType> initialized_mat_custom(2, 3, 10, custom);
+    Matrix3D<customType> initialized_mat_custom(2, 3, 10, custom);
 
     initialized_mat_int(1, 1, 1) = 5;
     initialized_mat_char(0, 4, 7) = 'x';
@@ -322,19 +322,19 @@ void test_slice() {
     initialized_mat_custom(1, 2, 9) = custom_zero;
 
 
-    Matrice3D<int> sliced_mat_int = initialized_mat_int.slice(1, 2, 0, 1, 0, 2);
+    Matrix3D<int> sliced_mat_int = initialized_mat_int.slice(1, 2, 0, 1, 0, 2);
     assert(sliced_mat_int.getFloors() == 2 && sliced_mat_int.getRows() == 2 && sliced_mat_int.getColumns() == 3);
-    cout << "Stampa della Matrice3D<int> slice-ata agli indici (1, 2, 0, 1, 0, 2) dalla matrice precedente" << endl;
+    cout << "Stampa della Matrix3D<int> slice-ata agli indici (1, 2, 0, 1, 0, 2) dalla matrice precedente" << endl;
     cout << sliced_mat_int << endl;
 
-    Matrice3D<char> sliced_mat_char = initialized_mat_char.slice(0, 0, 3, 6, 5, 12);
+    Matrix3D<char> sliced_mat_char = initialized_mat_char.slice(0, 0, 3, 6, 5, 12);
     assert(sliced_mat_char.getFloors() == 1 && sliced_mat_char.getRows() == 4 && sliced_mat_char.getColumns() == 8);
-    cout << "Stampa della Matrice3D<char> slice-ata agli indici (0, 0, 3, 6, 5, 12) dalla matrice precedente" << endl;
+    cout << "Stampa della Matrix3D<char> slice-ata agli indici (0, 0, 3, 6, 5, 12) dalla matrice precedente" << endl;
     cout << sliced_mat_char << endl;
 
-    Matrice3D<customType> sliced_mat_custom = initialized_mat_custom.slice(1, 1, 1, 2, 5, 9);
+    Matrix3D<customType> sliced_mat_custom = initialized_mat_custom.slice(1, 1, 1, 2, 5, 9);
     assert(sliced_mat_custom.getFloors() == 1 && sliced_mat_custom.getRows() == 2 && sliced_mat_custom.getColumns() == 5);
-    cout << "Stampa della Matrice3D<customType> slice-ata agli indici (1, 1, 1, 2, 5, 9) dalla matrice precedente" << endl;
+    cout << "Stampa della Matrix3D<customType> slice-ata agli indici (1, 1, 1, 2, 5, 9) dalla matrice precedente" << endl;
     cout << sliced_mat_custom << endl;
 
     cout << endl;
@@ -346,7 +346,7 @@ void increasing_matrixes_with_getter() {
 
     cout << "---- INCREASING MATRIXES WITH GETTER ----" << endl;
 
-    Matrice3D<int> increasing_mat_int(2, 5, 5);
+    Matrix3D<int> increasing_mat_int(2, 5, 5);
 
     int j = 0;
 
@@ -357,11 +357,11 @@ void increasing_matrixes_with_getter() {
                 ++j;
             }
 
-    cout << "Stampa della Matrice3D<int> crescente creata tramite getter/setter che parte da 0" << endl;
+    cout << "Stampa della Matrix3D<int> crescente creata tramite getter/setter che parte da 0" << endl;
     cout << increasing_mat_int << endl;
 
 
-    Matrice3D<char> increasing_mat_char(2, 5, 5);
+    Matrix3D<char> increasing_mat_char(2, 5, 5);
 
     char c = 'a';
 
@@ -372,11 +372,11 @@ void increasing_matrixes_with_getter() {
                 ++c;
             }
 
-    cout << "Stampa della Matrice3D<char> crescente creata tramite getter/setter che parte da 'a'" << endl;
+    cout << "Stampa della Matrix3D<char> crescente creata tramite getter/setter che parte da 'a'" << endl;
     cout << increasing_mat_char << endl;
 
 
-    Matrice3D<customType> increasing_mat_custom(2, 5, 5);
+    Matrix3D<customType> increasing_mat_custom(2, 5, 5);
 
     customType custom_to_increase(0, 0, 'a');
 
@@ -387,7 +387,7 @@ void increasing_matrixes_with_getter() {
                 custom_to_increase.increase(1, -0.1, 1);
             }
 
-    cout << "Stampa della Matrice3D<customType> crescente creata tramite getter/setter che parte da (0, 0, 'a')" << endl;
+    cout << "Stampa della Matrix3D<customType> crescente creata tramite getter/setter che parte da (0, 0, 'a')" << endl;
     cout << increasing_mat_custom << endl;
 
     cout << endl;
@@ -399,51 +399,51 @@ void increasing_matrixes_with_iterators() {
 
     cout << "---- INCREASING MATRIXES WITH ITERATORS (PRINTED AS A SEQUENCE THROUGH ITERATORS AS WELL) ----" << endl;
 
-    Matrice3D<int> iterators_mat_int(2, 5, 5);
+    Matrix3D<int> iterators_mat_int(2, 5, 5);
     
     int j = 0;
 
-    for (Matrice3D<int>::iterator i = iterators_mat_int.begin(); i != iterators_mat_int.end(); ++i) {
+    for (Matrix3D<int>::iterator i = iterators_mat_int.begin(); i != iterators_mat_int.end(); ++i) {
         (*i) = j;
         ++j;
     }
 
     // stampo diversamente per distinguerle da quelle riempite con il getter
 
-    cout << "Stampa della Matrice3D<int> crescente creata tramite iteratori che parte da 0" << endl;
-    for (Matrice3D<int>::iterator i = iterators_mat_int.begin(); i != iterators_mat_int.end(); ++i) {
+    cout << "Stampa della Matrix3D<int> crescente creata tramite iteratori che parte da 0" << endl;
+    for (Matrix3D<int>::iterator i = iterators_mat_int.begin(); i != iterators_mat_int.end(); ++i) {
         cout << (*i) << " ";
     }
     cout << endl << endl;
 
 
-    Matrice3D<char> iterators_mat_char(2, 5, 5);
+    Matrix3D<char> iterators_mat_char(2, 5, 5);
     
     char c = 'a';
 
-    for (Matrice3D<char>::iterator i = iterators_mat_char.begin(); i != iterators_mat_char.end(); ++i) {
+    for (Matrix3D<char>::iterator i = iterators_mat_char.begin(); i != iterators_mat_char.end(); ++i) {
         (*i) = c;
         ++c;
     }
 
-    cout << "Stampa della Matrice3D<char> crescente creata tramite iteratori che parte da 'a'" << endl;
-    for (Matrice3D<char>::iterator i = iterators_mat_char.begin(); i != iterators_mat_char.end(); ++i) {
+    cout << "Stampa della Matrix3D<char> crescente creata tramite iteratori che parte da 'a'" << endl;
+    for (Matrix3D<char>::iterator i = iterators_mat_char.begin(); i != iterators_mat_char.end(); ++i) {
         cout << (*i) << " ";
     }
     cout << endl << endl;
 
 
-    Matrice3D<customType> iterators_mat_custom(2, 5, 5);
+    Matrix3D<customType> iterators_mat_custom(2, 5, 5);
 
     customType custom_to_increase(0, 0, 'a');
 
-    for (Matrice3D<customType>::iterator i = iterators_mat_custom.begin(); i != iterators_mat_custom.end(); ++i) {
+    for (Matrix3D<customType>::iterator i = iterators_mat_custom.begin(); i != iterators_mat_custom.end(); ++i) {
         (*i) = custom_to_increase;
         custom_to_increase.increase(1, -0.1, 1);
     }
 
-    cout << "Stampa della Matrice3D<customType> crescente creata tramite iteratori che parte da (0, 0, 'a')" << endl;
-    for (Matrice3D<customType>::iterator i = iterators_mat_custom.begin(); i != iterators_mat_custom.end(); ++i) {
+    cout << "Stampa della Matrix3D<customType> crescente creata tramite iteratori che parte da (0, 0, 'a')" << endl;
+    for (Matrix3D<customType>::iterator i = iterators_mat_custom.begin(); i != iterators_mat_custom.end(); ++i) {
         cout << (*i) << " ";
     }
     cout << endl << endl;
@@ -457,7 +457,7 @@ void test_comparison_operators() {
 
     cout << "---- OPERATORE DI CONFRONTO (==) ----" << endl;
 
-    Matrice3D<int> increasing_mat_int(2, 5, 5);
+    Matrix3D<int> increasing_mat_int(2, 5, 5);
     int j = 0;
     for (int z = 0; z < increasing_mat_int.getFloors(); ++z)
         for (int y = 0; y < increasing_mat_int.getRows(); ++y)
@@ -467,7 +467,7 @@ void test_comparison_operators() {
             }
 
 
-    Matrice3D<char> increasing_mat_char(2, 5, 5);
+    Matrix3D<char> increasing_mat_char(2, 5, 5);
     char c = 'a';
     for (int z = 0; z < increasing_mat_char.getFloors(); ++z)
         for (int y = 0; y < increasing_mat_char.getRows(); ++y)
@@ -477,7 +477,7 @@ void test_comparison_operators() {
             }
 
 
-    Matrice3D<customType> increasing_mat_custom(2, 5, 5);
+    Matrix3D<customType> increasing_mat_custom(2, 5, 5);
     customType custom_to_increase(0, 0, 'a');
     for (int z = 0; z < increasing_mat_custom.getFloors(); ++z)
         for (int y = 0; y < increasing_mat_custom.getRows(); ++y)
@@ -487,28 +487,28 @@ void test_comparison_operators() {
             }
 
 
-    Matrice3D<int> iterators_mat_int(2, 5, 5);
+    Matrix3D<int> iterators_mat_int(2, 5, 5);
     j = 0;
-    for (Matrice3D<int>::iterator i = iterators_mat_int.begin(); i != iterators_mat_int.end(); ++i) {
+    for (Matrix3D<int>::iterator i = iterators_mat_int.begin(); i != iterators_mat_int.end(); ++i) {
         (*i) = j; ++j;
     }
 
-    Matrice3D<char> iterators_mat_char(2, 5, 5);
+    Matrix3D<char> iterators_mat_char(2, 5, 5);
     c = 'a';
-    for (Matrice3D<char>::iterator i = iterators_mat_char.begin(); i != iterators_mat_char.end(); ++i) {
+    for (Matrix3D<char>::iterator i = iterators_mat_char.begin(); i != iterators_mat_char.end(); ++i) {
         (*i) = c; ++c;
     }
 
-    Matrice3D<customType> iterators_mat_custom(2, 5, 5);
+    Matrix3D<customType> iterators_mat_custom(2, 5, 5);
     custom_to_increase.init(0, 0, 'a');
-    for (Matrice3D<customType>::iterator i = iterators_mat_custom.begin(); i != iterators_mat_custom.end(); ++i) {
+    for (Matrix3D<customType>::iterator i = iterators_mat_custom.begin(); i != iterators_mat_custom.end(); ++i) {
         (*i) = custom_to_increase;
         custom_to_increase.increase(1, -0.1, 1);
     }
 
 
 
-    Matrice3D<int> edited_mat_int(increasing_mat_int);
+    Matrix3D<int> edited_mat_int(increasing_mat_int);
     edited_mat_int(0, 2, 2) = 0;
 
     assert(increasing_mat_int == iterators_mat_int);
@@ -518,18 +518,18 @@ void test_comparison_operators() {
 
     cout << "Stampa del controllo di uguaglianza tra le Matrici3D<int> crescenti create con getter/setter e iteratori" << endl;
     cout << (increasing_mat_int == iterators_mat_int) << endl;
-    cout << "Stampa del controllo di uguaglianza di una Matrice3D<int> crescente con sè stessa" << endl;
+    cout << "Stampa del controllo di uguaglianza di una Matrix3D<int> crescente con sè stessa" << endl;
     cout << (increasing_mat_int == increasing_mat_int) << endl;
-    cout << "Stampa del controllo di uguaglianza tra una Matrice3D<int> crescente e una sua copia modificata" << endl;
+    cout << "Stampa del controllo di uguaglianza tra una Matrix3D<int> crescente e una sua copia modificata" << endl;
     cout << (increasing_mat_int == edited_mat_int) << endl;
     // qui entra in gioco la conversione automatica ma i numeri nella matrice non corrispondono ai numeri ottenuti castando i char a int
-    cout << "Stampa del controllo di uguaglianza tra una Matrice3D<int> crescente e una Matrice3D<char> crescente" << endl;
+    cout << "Stampa del controllo di uguaglianza tra una Matrix3D<int> crescente e una Matrix3D<char> crescente" << endl;
     cout << (increasing_mat_int == increasing_mat_char) << endl;
 
     cout << endl;
 
 
-    Matrice3D<char> edited_mat_char(increasing_mat_char);
+    Matrix3D<char> edited_mat_char(increasing_mat_char);
     edited_mat_char(0, 2, 2) = '0';
 
     assert(increasing_mat_char == iterators_mat_char);
@@ -539,17 +539,17 @@ void test_comparison_operators() {
 
     cout << "Stampa del controllo di uguaglianza tra le Matrici3D<char> crescenti create con getter/setter e iteratori" << endl;
     cout << (increasing_mat_char == iterators_mat_char) << endl;
-    cout << "Stampa del controllo di uguaglianza di una Matrice3D<char> crescente con sè stessa" << endl;
+    cout << "Stampa del controllo di uguaglianza di una Matrix3D<char> crescente con sè stessa" << endl;
     cout << (increasing_mat_char == increasing_mat_char) << endl;
-    cout << "Stampa del controllo di uguaglianza tra una Matrice3D<char> crescente e una sua copia modificata" << endl;
+    cout << "Stampa del controllo di uguaglianza tra una Matrix3D<char> crescente e una sua copia modificata" << endl;
     cout << (increasing_mat_char == edited_mat_char) << endl;
-    cout << "Stampa del controllo di uguaglianza tra una Matrice3D<char> crescente e una Matrice3D<int> crescente" << endl;
+    cout << "Stampa del controllo di uguaglianza tra una Matrix3D<char> crescente e una Matrix3D<int> crescente" << endl;
     cout << (increasing_mat_char == increasing_mat_int) << endl;
 
     cout << endl;
 
 
-    Matrice3D<customType> edited_mat_custom(increasing_mat_custom);
+    Matrix3D<customType> edited_mat_custom(increasing_mat_custom);
     customType custom_zero(0, 0.0, 'O');
     edited_mat_custom(0, 2, 2) = custom_zero;
 
@@ -560,11 +560,11 @@ void test_comparison_operators() {
 
     cout << "Stampa del controllo di uguaglianza tra le Matrici3D<customType> crescenti create con getter/setter e iteratori" << endl;
     cout << (increasing_mat_custom == iterators_mat_custom) << endl;
-    cout << "Stampa del controllo di uguaglianza di una Matrice3D<customType> crescente con sè stessa" << endl;
+    cout << "Stampa del controllo di uguaglianza di una Matrix3D<customType> crescente con sè stessa" << endl;
     cout << (increasing_mat_custom == increasing_mat_custom) << endl;
-    cout << "Stampa del controllo di uguaglianza tra una Matrice3D<customType> crescente e una sua copia modificata" << endl;
+    cout << "Stampa del controllo di uguaglianza tra una Matrix3D<customType> crescente e una sua copia modificata" << endl;
     cout << (increasing_mat_custom == edited_mat_custom) << endl;
-    cout << "Stampa del controllo di uguaglianza tra una Matrice3D<customType> crescente e una Matrice3D<char> crescente" << endl;
+    cout << "Stampa del controllo di uguaglianza tra una Matrix3D<customType> crescente e una Matrix3D<char> crescente" << endl;
     cout << (increasing_mat_custom == increasing_mat_char) << endl;
 
     cout << endl;
@@ -576,45 +576,45 @@ void test_fill() {
 
     cout << "---- FILL ----" << endl;
 
-    Matrice3D<int> increasing_mat_int(2, 5, 5);
+    Matrix3D<int> increasing_mat_int(2, 5, 5);
     int j = 0;
-    for (Matrice3D<int>::iterator i = increasing_mat_int.begin(); i != increasing_mat_int.end(); ++i) {
+    for (Matrix3D<int>::iterator i = increasing_mat_int.begin(); i != increasing_mat_int.end(); ++i) {
         (*i) = j; ++j;
     }
 
-    Matrice3D<char> increasing_mat_char(2, 5, 5);
+    Matrix3D<char> increasing_mat_char(2, 5, 5);
     char c = 'a';
-    for (Matrice3D<char>::iterator i = increasing_mat_char.begin(); i != increasing_mat_char.end(); ++i) {
+    for (Matrix3D<char>::iterator i = increasing_mat_char.begin(); i != increasing_mat_char.end(); ++i) {
         (*i) = c; ++c;
     }
 
-    Matrice3D<customType> increasing_mat_custom(2, 5, 5);
+    Matrix3D<customType> increasing_mat_custom(2, 5, 5);
     customType custom_to_increase(0, 0, 'a');
-    for (Matrice3D<customType>::iterator i = increasing_mat_custom.begin(); i != increasing_mat_custom.end(); ++i) {
+    for (Matrix3D<customType>::iterator i = increasing_mat_custom.begin(); i != increasing_mat_custom.end(); ++i) {
         (*i) = custom_to_increase;
         custom_to_increase.increase(1, -0.1, 1);
     }
 
 
-    Matrice3D<int> filled_mat_int(1, 5, 5);
+    Matrix3D<int> filled_mat_int(1, 5, 5);
 
     filled_mat_int.fill(increasing_mat_int.begin(), increasing_mat_int.end());
 
-    cout << "Stampa della Matrice3D<int> (1, 5, 5) riempita con valori presi dalla matrice crescente" << endl;
+    cout << "Stampa della Matrix3D<int> (1, 5, 5) riempita con valori presi dalla matrice crescente" << endl;
     cout << filled_mat_int << endl;
 
 
-    Matrice3D<char> filled_mat_char(1, 5, 5);
+    Matrix3D<char> filled_mat_char(1, 5, 5);
 
-    cout << "Stampa della Matrice3D<char> (1, 5, 5) riempita con valori presi dalla matrice crescente" << endl;
+    cout << "Stampa della Matrix3D<char> (1, 5, 5) riempita con valori presi dalla matrice crescente" << endl;
     filled_mat_char.fill(increasing_mat_char.begin(), increasing_mat_char.end());
 
     cout << filled_mat_char << endl;
 
 
-    Matrice3D<customType> filled_mat_custom(1, 5, 5);
+    Matrix3D<customType> filled_mat_custom(1, 5, 5);
 
-    cout << "Stampa della Matrice3D<customType> (1, 5, 5) riempita con valori presi dalla matrice crescente" << endl;
+    cout << "Stampa della Matrix3D<customType> (1, 5, 5) riempita con valori presi dalla matrice crescente" << endl;
     filled_mat_custom.fill(increasing_mat_custom.begin(), increasing_mat_custom.end());
 
     cout << filled_mat_custom << endl;
@@ -628,9 +628,9 @@ void test_trasform() {
 
     cout << "---- TRASFORM ----" << endl;
 
-    Matrice3D<int> increasing_mat_int(2, 5, 5);
+    Matrix3D<int> increasing_mat_int(2, 5, 5);
     int j = 0;
-    for (Matrice3D<int>::iterator i = increasing_mat_int.begin(); i != increasing_mat_int.end(); ++i) {
+    for (Matrix3D<int>::iterator i = increasing_mat_int.begin(); i != increasing_mat_int.end(); ++i) {
         (*i) = j; ++j;
     }
 
@@ -649,9 +649,9 @@ void test_trasform() {
         }
     };
 
-    Matrice3D<char, weird_functor> trasformed_mat_char = trasform<char, tochar>(increasing_mat_int);
+    Matrix3D<char, weird_functor> trasformed_mat_char = trasform<char, tochar>(increasing_mat_int);
 
-    Matrice3D<char> copy_trasformed_mat_char(trasformed_mat_char);
+    Matrix3D<char> copy_trasformed_mat_char(trasformed_mat_char);
 
     assert(trasformed_mat_char != copy_trasformed_mat_char); // because it uses the weird_functor for the comparison
 
@@ -660,7 +660,7 @@ void test_trasform() {
             for (int x = 0; x < trasformed_mat_char.getColumns(); ++x) 
                 assert(trasformed_mat_char(z, y, x) == static_cast<char>(increasing_mat_int(z, y, x)));
 
-    cout << "Stampa della Matrice3D<int> crescente trasformata convertendo i suoi valori a char" << endl;
+    cout << "Stampa della Matrix3D<int> crescente trasformata convertendo i suoi valori a char" << endl;
     cout << trasformed_mat_char << endl;
 
 
@@ -671,14 +671,14 @@ void test_trasform() {
         }
     };
 
-    Matrice3D<int> inverted_mat_int = trasform<int, invert>(increasing_mat_int);
+    Matrix3D<int> inverted_mat_int = trasform<int, invert>(increasing_mat_int);
 
     for (int z = 0; z < inverted_mat_int.getFloors(); ++z)
         for (int y = 0; y < inverted_mat_int.getRows(); ++y)
             for (int x = 0; x < inverted_mat_int.getColumns(); ++x) 
                 assert(inverted_mat_int(z, y, x) == -increasing_mat_int(z, y, x));
 
-    cout << "Stampa della Matrice3D<int> crescente trasformata invertendo i suoi valori di segno" << endl;
+    cout << "Stampa della Matrix3D<int> crescente trasformata invertendo i suoi valori di segno" << endl;
     cout << inverted_mat_int << endl;
 
     cout << endl;
@@ -690,9 +690,9 @@ void test_std_algorithm_sort() {
 
     cout << "---- SORT (ASCENDING) - FROM STD::ALGORITHM THROUGH ITERATORS ----" << endl;
 
-    Matrice3D<int> increasing_mat_int(2, 5, 5);
+    Matrix3D<int> increasing_mat_int(2, 5, 5);
     int j = 0;
-    for (Matrice3D<int>::iterator i = increasing_mat_int.begin(); i != increasing_mat_int.end(); ++i) {
+    for (Matrix3D<int>::iterator i = increasing_mat_int.begin(); i != increasing_mat_int.end(); ++i) {
         (*i) = j; ++j;
     }
 
@@ -703,12 +703,12 @@ void test_std_algorithm_sort() {
         }
     };
 
-    Matrice3D<int> inverted_mat_int = trasform<int, invert>(increasing_mat_int);
+    Matrix3D<int> inverted_mat_int = trasform<int, invert>(increasing_mat_int);
 
 
     sort(inverted_mat_int.begin(), inverted_mat_int.end());
 
-    cout << "Stampa della Matrice3D<int> con valori negativi riordinata in ordine crescente" << endl;
+    cout << "Stampa della Matrix3D<int> con valori negativi riordinata in ordine crescente" << endl;
     cout << inverted_mat_int << endl;
 
     cout << endl;
@@ -720,15 +720,15 @@ void test_conversion() {
 
     cout << "---- CONVERSIONE IMPLICITA/ESPLICITA ----" << endl;
 
-    Matrice3D<int> increasing_mat_int(2, 5, 5);
+    Matrix3D<int> increasing_mat_int(2, 5, 5);
     int j = 0;
-    for (Matrice3D<int>::iterator i = increasing_mat_int.begin(); i != increasing_mat_int.end(); ++i) {
+    for (Matrix3D<int>::iterator i = increasing_mat_int.begin(); i != increasing_mat_int.end(); ++i) {
         (*i) = j; ++j;
     }
 
-    Matrice3D<char> increasing_mat_char(2, 5, 5);
+    Matrix3D<char> increasing_mat_char(2, 5, 5);
     char c = 'a';
-    for (Matrice3D<char>::iterator i = increasing_mat_char.begin(); i != increasing_mat_char.end(); ++i) {
+    for (Matrix3D<char>::iterator i = increasing_mat_char.begin(); i != increasing_mat_char.end(); ++i) {
         (*i) = c; ++c;
     }
 
@@ -741,29 +741,29 @@ void test_conversion() {
 
 
     // implicita
-    Matrice3D<char> converted_mat_char = increasing_mat_int;
+    Matrix3D<char> converted_mat_char = increasing_mat_int;
 
-    cout << "Stampa della Matrice3D<int> convertita implicitamente a Matrice3D<char>" << endl;
+    cout << "Stampa della Matrix3D<int> convertita implicitamente a Matrix3D<char>" << endl;
     cout << converted_mat_char << endl;
 
     // esplicita
-    converted_mat_char = static_cast<Matrice3D<char>>(increasing_mat_int);
+    converted_mat_char = static_cast<Matrix3D<char>>(increasing_mat_int);
 
-    cout << "Stampa della Matrice3D<int> convertita esplicitamente a Matrice3D<char>" << endl;
+    cout << "Stampa della Matrix3D<int> convertita esplicitamente a Matrix3D<char>" << endl;
     cout << converted_mat_char << endl;
 
     cout << endl;
 
     // implicita
-    Matrice3D<customType> converted_mat_custom = increasing_mat_char;
+    Matrix3D<customType> converted_mat_custom = increasing_mat_char;
 
-    cout << "Stampa della Matrice3D<char> convertita implicitamente a Matrice3D<customType>" << endl;
+    cout << "Stampa della Matrix3D<char> convertita implicitamente a Matrix3D<customType>" << endl;
     cout << converted_mat_custom << endl;
 
     // esplicita
-    converted_mat_custom = static_cast<Matrice3D<char, weird_functor>>(increasing_mat_char);
+    converted_mat_custom = static_cast<Matrix3D<char, weird_functor>>(increasing_mat_char);
 
-    cout << "Stampa della Matrice3D<char> convertita esplicitamente a Matrice3D<customType>" << endl;
+    cout << "Stampa della Matrix3D<char> convertita esplicitamente a Matrix3D<customType>" << endl;
     cout << converted_mat_custom << endl;
 
 

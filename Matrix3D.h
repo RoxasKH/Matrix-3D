@@ -7,7 +7,7 @@
 #include <cassert>
 
 /**
-  @brief Classe Matrice3D
+  @brief Classe Matrix3D
 
   Classe templata che implementa una matrice a 3 dimensioni di celle 
   contenete dati di tipo T.
@@ -22,7 +22,7 @@ struct default_functor
 };
 
 template <typename T, typename F = default_functor<T>>
-class Matrice3D {
+class Matrix3D {
 
 	T* _matrix; ///< puntatore alla prima cella della matrice 3D
 
@@ -45,7 +45,7 @@ public:
 	    @post _rows == 0
 	    @post _column == 0
 	*/
-	Matrice3D() : _matrix(nullptr), _floors(0), _rows(0), _columns(0) {}
+	Matrix3D() : _matrix(nullptr), _floors(0), _rows(0), _columns(0) {}
 
 	/**
 	    @brief Costruttore secondario (z, y, x)
@@ -66,7 +66,7 @@ public:
 
 	    @throw std::bad_alloc possibile eccezione di allocazione
 	*/
-	Matrice3D(int z, int y, int x) : _matrix(nullptr), _floors(z), _rows(y), _columns(x) {
+	Matrix3D(int z, int y, int x) : _matrix(nullptr), _floors(z), _rows(y), _columns(x) {
 
 		assert(z > 0 && y > 0 && x > 0);
 
@@ -101,7 +101,7 @@ public:
 
 	    @throw std::bad_alloc possibile eccezione di allocazione
 	*/
-	Matrice3D(int z, int y, int x, const T &value) : _matrix(nullptr), _floors(z), _rows(y), _columns(x) {
+	Matrix3D(int z, int y, int x, const T &value) : _matrix(nullptr), _floors(z), _rows(y), _columns(x) {
 
 		assert(z > 0 && y > 0 && x > 0);
 
@@ -123,7 +123,7 @@ public:
 	    Costruttore di copia. Serve a creare un oggetto come copia di un 
 	    altro oggetto. I due oggetti devono essere indipendenti.
 
-	    @param other Matrice3D sorgente da copiare
+	    @param other Matrix3D sorgente da copiare
 	    
 	    @post _matrix != nullptr
 	    @post _floors == other._floors
@@ -132,7 +132,7 @@ public:
 
 	    @throw std::bad_alloc possibile eccezione di allocazione
 	*/
-	Matrice3D(const Matrice3D &other) : _matrix(nullptr), _floors(other._floors), _rows(other._rows), _columns(other._columns) {
+	Matrix3D(const Matrix3D &other) : _matrix(nullptr), _floors(other._floors), _rows(other._rows), _columns(other._columns) {
 		try {
 			_matrix = new T[other._floors * other._rows * other._columns];
 			for (unsigned int i = 0; i < _floors * _rows * _columns; ++i)
@@ -152,7 +152,7 @@ public:
 	    in un altro oggetto dello stesso tipo. I due oggetti devono essere
 	    indipendenti.
 
-	    @param other Matrice3D sorgenete da copiare
+	    @param other Matrix3D sorgenete da copiare
 
 	    @return un reference all'oggetto corrente
 
@@ -161,9 +161,9 @@ public:
 	    @post _rows == other._rows
 	    @post _column == other._column 
 	*/
-	Matrice3D &operator=(const Matrice3D &other) {
+	Matrix3D &operator=(const Matrix3D &other) {
 		if(this != &other) {
-            Matrice3D tmp(other);
+            Matrix3D tmp(other);
             this->swap(tmp);
         }
 
@@ -208,9 +208,9 @@ public:
 
 	    Funzione che scambia il contenuto e le dimensioni di due Matrici 3D.
 
-	    @param other la Matrice3D con cui scambiare il contenuto
+	    @param other la Matrix3D con cui scambiare il contenuto
 	*/
-	void swap(Matrice3D &other) {
+	void swap(Matrix3D &other) {
         std::swap(_matrix, other._matrix);
         std::swap(_rows, other._rows);
         std::swap(_columns, other._columns);
@@ -220,7 +220,7 @@ public:
     /**
     	@brief Metodo clear
 
-    	Funzione che svuota la Matrice3D, deallocando la memoria allocata sullo heap,
+    	Funzione che svuota la Matrix3D, deallocando la memoria allocata sullo heap,
     	e portando i dati membro ad uno stato coerente.
 
     	@post _matrix == nullptr
@@ -250,7 +250,7 @@ public:
 	    @post _rows == 0
 	    @post _column == 0
 	*/
-    ~Matrice3D() {
+    ~Matrix3D() {
         clear();
     }
 
@@ -295,7 +295,7 @@ public:
     /**
     @brief Metodo slice
 
-	    Metodo che ritorna una sotto-Matrice3D contenente i valori negli intervalli di 
+	    Metodo che ritorna una sotto-Matrix3D contenente i valori negli intervalli di 
 	    coordinate z1-z2, y1-y2 e x1-x2.
 
 	    @param z1 indice del piano da cui iniziare lo slicing della matrice 3D originale
@@ -305,17 +305,17 @@ public:
 	    @param y2 indice della riga in cui terminare lo slicing della matrice 3D originale
 	    @param x2 indice della colonna in cui terminare lo slicing della matrice 3D originale
 
-	    @return sotto-Matrice3D contenente i valori negli intervalli specificati
+	    @return sotto-Matrix3D contenente i valori negli intervalli specificati
 
 	    @pre z1 < _floors && z2 < _floors && y1 < _rows && y2 < _rows && x1 < _columns && x2 < _columns
 	*/
-    Matrice3D slice(int z1, int z2, int y1, int y2, int x1, int x2) const {
+    Matrix3D slice(int z1, int z2, int y1, int y2, int x1, int x2) const {
 
     	assert(z1 >= 0 && z2 >= 0 && y1 >= 0 && y2 >= 0 && x1 >= 0 && x2 >= 0);
     	assert(z1 < _floors && z2 < _floors && y1 < _rows && y2 < _rows && x1 < _columns && x2 < _columns);
     	assert(z2 >= z1 && y2 >= y1 && x2 >= x1);
 
-    	Matrice3D sliced_matrix(z2-z1+1, y2-y1+1, x2-x1+1);
+    	Matrix3D sliced_matrix(z2-z1+1, y2-y1+1, x2-x1+1);
 
     	for(unsigned int z = z1; z <= z2; ++z) 
         	for(unsigned int y = y1; y <= y2; ++y) 
@@ -337,13 +337,13 @@ public:
 	    Se non definito il funtore di default utilizza l'operatore == ed è necessario quindi 
 	    che eventuali tipi di dato custom lo ridefiniscano a loro volta.
 
-	    @param other Matrice3D sorgente da confrontare
+	    @param other Matrix3D sorgente da confrontare
 
 	    @return true se le matrici sono uguali, false altrimenti
 
 	    @pre _floors == other._floors && _rows == other._rows && _columns == other._columns
 	*/
-    bool operator==(const Matrice3D &other) const {
+    bool operator==(const Matrix3D &other) const {
 
     	assert(_floors == other._floors && _rows == other._rows && _columns == other._columns);
 
@@ -367,11 +367,11 @@ public:
 	    in alcune celle corrispondenti.
 	    Sfrutta l'operatore di uguaglianza e ritorna il valore booleano opposto.
 
-	    @param other Matrice3D sorgente da confrontare
+	    @param other Matrix3D sorgente da confrontare
 
 	    @return true se le matrici sono diverse, false altrimenti
 	*/
-    bool operator!=(const Matrice3D &other) const {
+    bool operator!=(const Matrix3D &other) const {
 
         return !((*this) == other);
         			
@@ -407,7 +407,7 @@ public:
 	/**
 	    @brief Metodo fill
 
-	    Metodo generico che permette di riempire una Matrice3D con valori presi da una 
+	    Metodo generico che permette di riempire una Matrix3D con valori presi da una 
 	    sequenza di dati identificata da iteratori generici. 
 	    Il riempimento avviene nell’ordine di iterazione dei dati della matrice, e si ferma
 	    nel caso in cui la matrice da riempire non è più in grado di contenere dati ma
@@ -420,7 +420,7 @@ public:
     template<typename Iter>
     void fill(Iter b, Iter e) {
 
-    	Matrice3D tmp(*this);
+    	Matrix3D tmp(*this);
 
     	int i = 0;
     	while(b != e && i != _floors * _rows * _columns){ // riempie finchè può
@@ -435,17 +435,17 @@ public:
     /**
 	    @brief Costruttore di conversione (implicita/esplicita)
 
-	    Il costruttore di conversione crea un oggetto Matrice3D<T, F> a partire da un
-	    oggetto Matrice3D<U, Q>.
-	    Permette la conversione di una Matrice3D definita su un certo tipo a una 
-	    Matrice3D definita su un tipo differente (dove il cast è possibile).
+	    Il costruttore di conversione crea un oggetto Matrix3D<T, F> a partire da un
+	    oggetto Matrix3D<U, Q>.
+	    Permette la conversione di una Matrix3D definita su un certo tipo a una 
+	    Matrix3D definita su un tipo differente (dove il cast è possibile).
 
-	    @param other la Matrice3D di tipo <U, Q> da cui creare il nuovo oggetto
+	    @param other la Matrix3D di tipo <U, Q> da cui creare il nuovo oggetto
 
 	    @throw std::bad_alloc possibile eccezione di allocazione
 	*/
     template <typename U, typename Q>
-	Matrice3D(const Matrice3D<U, Q> &other) : _matrix(nullptr), _floors(other.getFloors()), _rows(other.getRows()), _columns(other.getColumns()) {
+	Matrix3D(const Matrix3D<U, Q> &other) : _matrix(nullptr), _floors(other.getFloors()), _rows(other.getRows()), _columns(other.getColumns()) {
 		try {
 			_matrix = new T[other.getFloors() * other.getRows() * other.getColumns()];
 			for (unsigned int z = 0; z < _floors; ++z)
@@ -464,17 +464,17 @@ public:
 	    @brief ridefinizione operatore di stream
 
 	    Funzione GLOBALE che ridefinisce l'operatore di stream per scrivere una
-	    Matrice3D su uno stream di output.
-    	La funzione è dichiarata friend perchè accediamo ai dati privati di Matrice3D.
+	    Matrix3D su uno stream di output.
+    	La funzione è dichiarata friend perchè accediamo ai dati privati di Matrix3D.
 
 	    Ridefinizione dell'operatore di stream 
 
 	    @param os stream di output (operando di sinistra)
-	    @param m Matrice3D da scrivere (operando di destra)
+	    @param m Matrix3D da scrivere (operando di destra)
 
 	    @return reference allo stream di output
 	*/
-    friend std::ostream &operator<<(std::ostream &os, const Matrice3D &m) {
+    friend std::ostream &operator<<(std::ostream &os, const Matrix3D &m) {
         
         os << "rows: " << m._rows << std::endl;
         os << "columns: " << m._columns << std::endl;
@@ -506,7 +506,7 @@ public:
 /**
     @brief Funzione globale trasform
 
-    Funzione generica che permette di ottenere, a partire da una Matrice3D passata,
+    Funzione generica che permette di ottenere, a partire da una Matrix3D passata,
     una nuova matrice sui cui elementi è stato applicato un determinato funtore, anch'esso
     passato. Il tipo T della Matrice 3D di ritorno, di norma quello restituito dal funtore
     passato, va specificato dal chiamante.
@@ -519,9 +519,9 @@ public:
     @return la matrice 3D ottenuta applicando il funtore ai dati della matrice di partenza
 */
 template <typename Q, typename F, typename H = default_functor<Q>, typename G, typename T>
-Matrice3D<Q> trasform(const Matrice3D<T, G> &A) {
+Matrix3D<Q> trasform(const Matrix3D<T, G> &A) {
 
-	Matrice3D<Q, H> B(A.getFloors(), A.getRows(), A.getColumns());
+	Matrix3D<Q, H> B(A.getFloors(), A.getRows(), A.getColumns());
 
 	F functor;
 

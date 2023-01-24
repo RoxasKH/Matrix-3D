@@ -7,10 +7,10 @@
 #include <cassert>
 
 /**
-  @brief Classe Matrix3D
+  @brief Matrix3D Class
 
-  Classe templata che implementa una matrice a 3 dimensioni di celle 
-  contenete dati di tipo T.
+  Template class implementing a 3-dimensional array of cells
+  containing data of type T.
 */
 
 template <typename Q>
@@ -24,21 +24,21 @@ struct default_functor
 template <typename T, typename F = default_functor<T>>
 class Matrix3D {
 
-	T* _matrix; ///< puntatore alla prima cella della matrice 3D
+	T* _matrix; ///< pointer to the first cell of the 3D array
 
-	unsigned int _floors; ///< numero di piani della matrice 3D
-	unsigned int _rows; ///< numero di righe della matrice 3D
-	unsigned int _columns; ///< numero di colonne della matrice 3D
+	unsigned int _floors; ///< number of floors of the 3D matrix
+	unsigned int _rows; ///< number of rows of the 3D matrix
+	unsigned int _columns; ///< number of columns of the 3D matrix
 
-	F _equals; //< funtore usato per controllare se due dati di tipo T sono uguali
+	F _equals; //< functor used to check if two data of type T are equal
 
 public:
 
 	/**
-	    @brief Costruttore di default
+	    @brief Default constructor
 
-	    Il costruttore di default serve a inizializzare i dati membro
-	    per rappresentare una matrice 3D vuota.
+	    The default constructor is used to initialize member data
+	    to represent an empty 3D array.
 
 	    @post _matrix = nullptr
 	    @post _floors == 0
@@ -48,14 +48,14 @@ public:
 	Matrix3D() : _matrix(nullptr), _floors(0), _rows(0), _columns(0) {}
 
 	/**
-	    @brief Costruttore secondario (z, y, x)
+	    @brief Secondary constructor (z, y, x)
 
-	    Costruttore secondario che serve a costruire una matrice 3D in base 
-	    alle dimensioni date. Le celle della matrice non sono inizializzate.
+	    Secondary constructor used to construct a 3D matrix based on 
+	    the given dimensions. The cells of the array are not initialized.
 
-	    @param z numero di piani della matrice 3D da creare
-	    @param y numero di righe della matrice 3D da creare
-	    @param x numero di colonne della matrice 3D da creare
+	    @param z number of floors of the 3D matrix to create
+	    @param y number of rows of the 3D matrix to create
+	    @param x number of columns of the 3D matrix to create
 
 	    @pre z!=0 && y!=0 && x!=0
 
@@ -64,7 +64,7 @@ public:
 	    @post _rows == y
 	    @post _column == x
 
-	    @throw std::bad_alloc possibile eccezione di allocazione
+	    @throw std::bad_alloc possible allocation exception
 	*/
 	Matrix3D(int z, int y, int x) : _matrix(nullptr), _floors(z), _rows(y), _columns(x) {
 
@@ -81,16 +81,16 @@ public:
 	}
 
 	/**
-	    @brief Costruttore secondario (z, y, x, value)
+	    @brief Secondary constructor (z, y, x, value)
 
-	    Costruttore secondario che serve a costruire una matrice 3D in base 
-	    alle dimensioni date, e che inizializza ogni cella della matrice al 
-	    valore di tipo T value passato.
+	    Secondary constructor which is used to construct a 3D matrix based on 
+	    the given dimensions, and which initializes each cell of the matrix to 
+	    the value of type T value passed.
 
-	    @param z numero di piani della matrice 3D da creare
-	    @param y numero di righe della matrice 3D da creare
-	    @param x numero di colonne della matrice 3D da creare
-	    @param value valore del tipo della matrice con cui inizializzarne le celle
+	    @param z number of floors of the 3D matrix to create
+	    @param y number of rows of the 3D matrix to create
+	    @param x number of columns of the 3D matrix to create
+	    @param value value of the type of the array with which to initialize the cells
 
 	    @pre z!=0 && y!=0 && x!=0
 
@@ -99,7 +99,7 @@ public:
 	    @post _rows == y
 	    @post _column == x
 
-	    @throw std::bad_alloc possibile eccezione di allocazione
+	    @throw std::bad_alloc possible allocation exception
 	*/
 	Matrix3D(int z, int y, int x, const T &value) : _matrix(nullptr), _floors(z), _rows(y), _columns(x) {
 
@@ -120,17 +120,17 @@ public:
 	/**
 	    @brief Copy Constructor
 
-	    Costruttore di copia. Serve a creare un oggetto come copia di un 
-	    altro oggetto. I due oggetti devono essere indipendenti.
+	    Copy constructor. It is used to create an object as a copy of 
+	    another object. The two objects must be independent.
 
-	    @param other Matrix3D sorgente da copiare
+	    @param other source Matrix3D to copy
 	    
 	    @post _matrix != nullptr
 	    @post _floors == other._floors
 	    @post _rows == other._rows
 	    @post _column == other._column
 
-	    @throw std::bad_alloc possibile eccezione di allocazione
+	    @throw std::bad_alloc possible allocation exception
 	*/
 	Matrix3D(const Matrix3D &other) : _matrix(nullptr), _floors(other._floors), _rows(other._rows), _columns(other._columns) {
 		try {
@@ -146,15 +146,15 @@ public:
 	}
 
 	/**
-	    @brief Operatore di assegnamento
+	    @brief Assignment operator
 
-	    L'operatore di assegnamento serve a copiare il contenuto di un oggetto
-	    in un altro oggetto dello stesso tipo. I due oggetti devono essere
-	    indipendenti.
+	    The assignment operator is used to copy the contents of one 
+	    object into another object of the same type. 
+	    The two objects must be independent.
 
-	    @param other Matrix3D sorgenete da copiare
+	    @param other source Matrix3D to copy
 
-	    @return un reference all'oggetto corrente
+	    @return a reference to the current object
 
 	    @post _matrix != nullptr
 	    @post _floors == other._floors
@@ -171,44 +171,44 @@ public:
 	}
 
 	/**
-	    @brief Accesso al numero di piani della matrice 3D
+	    @brief Access to the number of floors of the 3D matrix
 
-	    Metodo per ottenere il numero di piani della matrice 3D.
+	    Method to obtain the number of floors of the 3D matrix.
 
-    	@return numero di piani della matrice 3D
+    	@return number of floors of the 3D matrix
 	*/
 	unsigned int getFloors() const {
 		return _floors;
 	}
 
 	/**
-	    @brief Accesso al numero di righe della matrice 3D
+	    @brief Access to the number of rows of the 3D matrix
 
-	    Metodo per ottenere il numero di righe della matrice 3D.
+	    Method to obtain the number of rows of the 3D matrix.
 
-    	@return numero di righe della matrice 3D
+    	@return number of rows of the 3D matrix
 	*/
 	unsigned int getRows() const {
 		return _rows;
 	}
 
 	/**
-	    @brief Accesso al numero di colonne della matrice 3D
+	    @brief Access to the number of columns of the 3D matrix
 
-	    Metodo per ottenere il numero di colonne della matrice 3D.
+	    Method to obtain the number of columns of the 3D matrix.
 
-    	@return numero di colonne della matrice 3D
+    	@return number of columns of the 3D matrix
 	*/
 	unsigned int getColumns() const {
 		return _columns;
 	}
 
 	/**
-	    @brief Metodo swap
+	    @brief swap method
 
-	    Funzione che scambia il contenuto e le dimensioni di due Matrici 3D.
+	    Function that swaps the contents and dimensions of two 3D matrixes.
 
-	    @param other la Matrix3D con cui scambiare il contenuto
+	    @param other the Matrix3D with which to exchange content
 	*/
 	void swap(Matrix3D &other) {
         std::swap(_matrix, other._matrix);
@@ -218,10 +218,10 @@ public:
     }
 
     /**
-    	@brief Metodo clear
+    	@brief clear method
 
-    	Funzione che svuota la Matrix3D, deallocando la memoria allocata sullo heap,
-    	e portando i dati membro ad uno stato coerente.
+    	Function that empties the Matrix3D, deallocating the memory allocated 
+    	on the heap, and bringing member data to a coherent state.
 
     	@post _matrix == nullptr
 	    @post _floors == 0
@@ -238,12 +238,11 @@ public:
     }
 
     /**
-	    @brief Distruttore
+	    @brief Destructor
 
-	    Distruttore della classe. Il distruttore deve rimuovere tutte 
-	    le risorse usate dalla classe. In questo caso l'array allocato 
-	    sullo heap deve essere deallocato e gli altri dati membro vanno
-	    riportati a uno stato coerente.
+	    Class destructor. The destructor must remove all resources used 
+	    by the class. In this case the heap-allocated array must be deallocated 
+	    and the other data members must be returned to a coherent state.
 
 	    @post _matrix == nullptr
 	    @post _floors == 0
@@ -255,15 +254,15 @@ public:
     }
 
 	/**
-	    @brief Getter/Setter della cella (z, y, x)-esima
+	    @brief Getter/Setter of the (z, y, x)-th cell
 
-	    Metodo che permette di leggere e/o scrivere la cella (z, y, x)-esima della matrice.
+	    Method that allows to read and/or write the (z, y, x)-th cell of the matrix.
 
-	    @param z indice del piano della matrice 3D in cui si trova la cella
-	    @param y indice della riga della matrice 3D in cui si trova la cella
-	    @param x indice della colonna della matrice 3D in cui si trova la cella
+	    @param z floor index of the 3D matrix in which the cell is located
+	    @param y row index of the 3D matrix where the cell is located
+	    @param x column index of the 3D matrix where the cell is located
 
-	    @return reference alla cella (z, y, x)-esima della matrice 3D
+	    @return reference to the (z, y, x)-th cell of the 3D matrix
 
 	    @pre z < _floors && y < _rows && x < _columns
 	*/
@@ -274,13 +273,13 @@ public:
     }
 
     /**
-	    @brief Getter della cella (z, y, x)-esima
+	    @brief Getter of the (z, y, x)-th cell
 
-	    Metodo che permette di leggere la cella (z, y, x)-esima della matrice.
+	    Method which allows to read the (z, y, x)-th cell of the matrix.
 
-	    @param z indice del piano della matrice 3D in cui si trova la cella
-	    @param y indice della riga della matrice 3D in cui si trova la cella
-	    @param x indice della colonna della matrice 3D in cui si trova la cella
+	    @param z floor index of the 3D matrix in which the cell is located
+	    @param y row index of the 3D matrix where the cell is located
+	    @param x column index of the 3D matrix where the cell is located
 
 	    @return reference alla cella (z, y, x)-esima della matrice 3D
 
@@ -293,19 +292,19 @@ public:
     }
 
     /**
-    @brief Metodo slice
+    @brief slice method
 
-	    Metodo che ritorna una sotto-Matrix3D contenente i valori negli intervalli di 
-	    coordinate z1-z2, y1-y2 e x1-x2.
+	    Method that returns a sub-Matrix3D containing the values in the coordinate 
+	    intervals z1-z2, y1-y2 and x1-x2.
 
-	    @param z1 indice del piano da cui iniziare lo slicing della matrice 3D originale
-	    @param y1 indice della riga da cui iniziare lo slicing della matrice 3D originale
-	    @param x1 indice della colonna da cui iniziare lo slicing della matrice 3D originale
-	    @param z2 indice del piano in cui terminare lo slicing della matrice 3D originale
-	    @param y2 indice della riga in cui terminare lo slicing della matrice 3D originale
-	    @param x2 indice della colonna in cui terminare lo slicing della matrice 3D originale
+	    @param z1 floor index from which to start the slicing of the original 3D matrix
+	    @param y1 row index from which to start the slicing of the original 3D matrix
+	    @param x1 column index from which to start the slicing of the original 3D matrix
+	    @param z2 floor index from which to end the slicing of the original 3D matrix
+	    @param y2 row index from which to end the slicing of the original 3D matrix
+	    @param x2 column index from which to end the slicing of the original 3D matrix
 
-	    @return sotto-Matrix3D contenente i valori negli intervalli specificati
+	    @return sub-Matrix3D containing the values in the specified ranges
 
 	    @pre z1 < _floors && z2 < _floors && y1 < _rows && y2 < _rows && x1 < _columns && x2 < _columns
 	*/
@@ -327,19 +326,18 @@ public:
     }
 
     /**
-	    @brief Operatore di uguaglianza
+	    @brief Equality operator
 
-	    L'operatore di uguaglianza serve a controllare che due Matrici3D aventi le
-	    stesse dimensioni siano uguali e contengano dunque gli stessi valori in tutte le
-	    celle corrispondenti.
-	    Per il confronto viene utilizzato il funtore _equals, funtore membro il cui tipo può 
-	    essere definito in fase di creazione della matrice per maggiore flessibilità. 
-	    Se non definito il funtore di default utilizza l'operatore == ed è necessario quindi 
-	    che eventuali tipi di dato custom lo ridefiniscano a loro volta.
+	    The equality operator is used to check that two Matrices 3D having the same dimensions 
+	    are equal and therefore contain the same values in all the corresponding cells.
+		For the comparison, the _equals functor is used, a member functor whose type can be 
+		defined when creating the matrix for greater flexibility.
+		If not defined, the default functor uses the == operator and it is therefore necessary 
+		that any custom data types redefine it in turn.
 
-	    @param other Matrix3D sorgente da confrontare
+	    @param other source Matrix3D to compare
 
-	    @return true se le matrici sono uguali, false altrimenti
+	    @return true if the matrixes are equal, false otherwise
 
 	    @pre _floors == other._floors && _rows == other._rows && _columns == other._columns
 	*/
@@ -360,16 +358,16 @@ public:
     }
 
     /**
-	    @brief Operatore di disuguaglianza
+	    @brief Inequality operator
 
-	    L'operatore di disuguaglianza serve a controllare che due Matrici3D aventi le
-	    stesse dimensioni siano diverse e che contengano dunque valori diversi anche solo
-	    in alcune celle corrispondenti.
-	    Sfrutta l'operatore di uguaglianza e ritorna il valore booleano opposto.
+	    The inequality operator is used to check that two Matrices 3D having the same 
+	    dimensions are different and therefore contain different values even in only 
+	    some corresponding cells.
+		Use the equality operator and return the opposite boolean value.
 
-	    @param other Matrix3D sorgente da confrontare
+	    @param other source Matrix3D to compare
 
-	    @return true se le matrici sono diverse, false altrimenti
+	    @return true if the matrixes are equal, false otherwise
 	*/
     bool operator!=(const Matrix3D &other) const {
 
@@ -377,42 +375,42 @@ public:
         			
     }
 
-    // Implementazione di iteratori di tipo random access tramite trucco con puntatori,
-	// essendo la struttura interna array-based.
+    // Implementation of random access iterators through the pointer trick,
+	// being the internal structure array-based.
 
     typedef T *iterator;
 
-    // Ritorna l'iteratore all'inizio della sequenza dati
+    // Return the iterator to the start of the data sequence
 	iterator begin() {
 		return _matrix;
 	}
 
-	// Ritorna l'iteratore alla fine della sequenza dati
+	// Return the iterator at the end of the data sequence
 	iterator end() {
 		return _matrix + (_rows * _columns * _floors);
 	}
 
 	typedef const T *const_iterator;
 
-	// Ritorna l'iteratore all'inizio della sequenza dati
+	// Return the iterator to the start of the data sequence
 	const_iterator begin() const {
 		return _matrix;
 	}
 	
-	// Ritorna l'iteratore alla fine della sequenza dati
+	// Return the iterator at the end of the data sequence
 	const_iterator end() const {
 		return _matrix + (_rows * _columns * _floors);
 	}
 
 	/**
-	    @brief Metodo fill
+	    @brief fill method
 
-	    Metodo generico che permette di riempire una Matrix3D con valori presi da una 
-	    sequenza di dati identificata da iteratori generici. 
-	    Il riempimento avviene nell’ordine di iterazione dei dati della matrice, e si ferma
-	    nel caso in cui la matrice da riempire non è più in grado di contenere dati ma
-	    la sequenza passata non è terminata.
-	    I vecchi valori sono sovrascritti.
+	    Generic method that allows to fill a Matrix3D with values taken 
+	    from a sequence of data identified by generic iterators.
+		Filling takes place in the order of iteration of the matrix data, 
+		and stops in case the matrix to be filled is no longer able to contain 
+		data but the passed sequence is not ended yet.
+		The old values are overwritten.
 
 	    @param b l'iteratore che indica l'inizio della sequenza di dati
 	    @param b l'iteratore che indica la fine della sequenza di dati
@@ -423,7 +421,7 @@ public:
     	Matrix3D tmp(*this);
 
     	int i = 0;
-    	while(b != e && i != _floors * _rows * _columns){ // riempie finchè può
+    	while(b != e && i != _floors * _rows * _columns){ // fills while it can
     		tmp._matrix[i] = static_cast<T>(*b);
     		++b;
     		++i;
@@ -433,16 +431,16 @@ public:
     }
 
     /**
-	    @brief Costruttore di conversione (implicita/esplicita)
+	    @brief Conversion constructor (implicit/explicit)
 
-	    Il costruttore di conversione crea un oggetto Matrix3D<T, F> a partire da un
-	    oggetto Matrix3D<U, Q>.
-	    Permette la conversione di una Matrix3D definita su un certo tipo a una 
-	    Matrix3D definita su un tipo differente (dove il cast è possibile).
+	    The conversion constructor creates a Matrix3D<T, F> object from a
+		Matrix3D<U, Q> object.
+		Allows the conversion of a Matrix3D defined on one type to a Matrix3D 
+		defined on a different type (where casting is possible).
 
-	    @param other la Matrix3D di tipo <U, Q> da cui creare il nuovo oggetto
+	    @param other the Matrix3D of type <U, Q> from which to create the new object
 
-	    @throw std::bad_alloc possibile eccezione di allocazione
+	    @throw std::bad_alloc possible allocation exception
 	*/
     template <typename U, typename Q>
 	Matrix3D(const Matrix3D<U, Q> &other) : _matrix(nullptr), _floors(other.getFloors()), _rows(other.getRows()), _columns(other.getColumns()) {
@@ -461,18 +459,16 @@ public:
 	}
 
     /**
-	    @brief ridefinizione operatore di stream
+	    @brief stream operator redefinition
 
-	    Funzione GLOBALE che ridefinisce l'operatore di stream per scrivere una
-	    Matrix3D su uno stream di output.
-    	La funzione è dichiarata friend perchè accediamo ai dati privati di Matrix3D.
+	    Global function that redefines the stream operator to write a Matrix3D 
+	    to an output stream.
+    	The function is declared friend because we access the private data of Matrix3D.
 
-	    Ridefinizione dell'operatore di stream 
+	    @param os output stream (left operand)
+	    @param m Matrix3D to write (right operand)
 
-	    @param os stream di output (operando di sinistra)
-	    @param m Matrix3D da scrivere (operando di destra)
-
-	    @return reference allo stream di output
+	    @return reference to the output stream
 	*/
     friend std::ostream &operator<<(std::ostream &os, const Matrix3D &m) {
         
@@ -504,19 +500,19 @@ public:
 };
 
 /**
-    @brief Funzione globale trasform
+    @brief Global function transform
 
-    Funzione generica che permette di ottenere, a partire da una Matrix3D passata,
-    una nuova matrice sui cui elementi è stato applicato un determinato funtore, anch'esso
-    passato. Il tipo T della Matrice 3D di ritorno, di norma quello restituito dal funtore
-    passato, va specificato dal chiamante.
-    E' possibile specificare anche il tipo di funtore H usato per l'operatore di uguaglianza 
-    della matrice di ritorno.
+    Generic function that allows to obtain, starting from a passed Matrix3D, 
+    a new matrix on whose elements a specific functor, also passed, has been applied. 
+    The type T of the return 3D Matrix, normally the one returned by the passed functor, 
+    must be specified by the caller.
+	It is also possible to specify the type of functor H used for the equality operator 
+	of the return matrix.
 
-    @param A la matrice 3D di partenza
-    @param functor il funtore da applicare ai dati nelle celle della matrice 3D
+    @param A the starting 3D matrix
+    @param functor the functor to apply to the data in the cells of the 3D array
 
-    @return la matrice 3D ottenuta applicando il funtore ai dati della matrice di partenza
+    @return the 3D matrix obtained by applying the functor to the data of the starting matrix
 */
 template <typename Q, typename F, typename H = default_functor<Q>, typename G, typename T>
 Matrix3D<Q> trasform(const Matrix3D<T, G> &A) {

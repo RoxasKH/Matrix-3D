@@ -43,7 +43,7 @@ The copy constructor takes as input another `Matrix3D` object to be copied as a 
 Since both `new` (although rarely) and copying the data into the newly allocated array may fail (since the data type may be a custom type and the type-redefined assignment operator is not guaranteed to be safe, but it may allocate memory or needing resources and therefore throwing exceptions), these 2 operations are inserted in a try catch block which, in addition to re-throwing the exception to the caller, returns the matrix to a coherent state, canceling any changes made by relying on a `clear()` function defined in the classroom.
 ### Assignment operator
 The assignment operator takes as input parameter another `Matrix3D` object as a constant reference for efficiency reasons, as for the copy constructor. After checking that the object being assigned to is not the same one you are trying to assign, it creates a temporary `Matrix3D` copy of the passed one using the copy constructor, after which it relies on a `swap()` function which calls on `this` by passing the temporary array as a parameter. The latter takes care of exchanging member data between the 2 objects. Finally, it returns the dereference of the this pointer to the object.
-### Destroyer
+### Destructor
 Called whenever a `Matrix3D` object needs to be destroyed, it does nothing but call the `clear()` function in turn.
 
 ## Getters
@@ -65,11 +65,11 @@ For the same reasons listed for the copy constructor, `new` and assignments are 
 
 ### Conversion Constructor
 The constructor in question is a template constructor, which takes as input another 3D matrix of any type as a constant reference, then creates the new matrix of type `<T, F>` setting its dimensions to those of the passed matrix and allocating even memory to that used by the passed matrix.
-Finally, he fills it with the data of the passed matrix converted to type `T` via static_cast, using the data access operator through the 3 indexes that identify the position of a cell.
+Finally, he fills it with the data of the passed matrix converted to type `T` through static_cast, using the data access operator through the 3 indexes that identify the position of a cell.
 The dimensions of the passed array are obtained through the public getters as it is considered a different data type (since it could be of any type).
 As with the copy constructor, memory allocation and assignment are inside a try catch block, which returns the array to a consistent state in case new, assignment, or conversion to type `T` fails.
 
-## Member functions:
+## Member functions
 
 ### Getter/setter of data in a cell [operator()(z, y, x)]
 The getter/setter retrieves the data from the vector `_matrix` given member by calculating its index based on the dimensions passed through the previously specified calculation, and returns it to the caller as a reference for efficiency reasons, as the data type can be any.
@@ -111,7 +111,7 @@ The function takes as input a 3D matrix as a reference for efficiency reasons, a
 ### clear()
 The function empties the `Matrix3D` object on which it is called, deallocating any memory allocated calling `delete[]` on the array pointer, setting the aforementioned pointer to `nullptr` and resetting the 3 dimensions to `0`.
 
-## Global functions:
+## Global functions
 
 ### transform(const Matrix3D<T, G> &A)
 Template global function that has 5 typenames, which correspond respectively to the type of data contained by the matrix to return, to the type of the functor to be used on the passed matrix for data transformation, the type of functor of the return matrix (if not specified, it uses again the default one), that of the passed 3D matrix and its data type (being passed as a parameter, the latter 2 are automatically deduced by the compiler).
@@ -127,11 +127,11 @@ Given the nature of the data structure, the iterators implemented are of the **r
 Since the internal structure of the `Matrix3D` class is an array, the implementation was done using the pointer trick whereby it is sufficient to remap the `iterator` and `const_iterator` types with `typedef` to pointers to the template data type, and then implement the `begin()` and `end()` functions which expose the iterators of start and end of the data sequence correctly, making them respectively return the pointer to the first data of the array, already present as data member (`_matrix`), and the one pointing to the end of the sequence of data data, i.e. to the cell following the last cell in the array. The position of the last cell corresponds to the initial position to which the size of the array is added (product of the 3 dimensions).
 Although this cell is not part of the matrix array and it is not known what data it contains, this is perfectly safe, as the pointer returned by the `end()` function will only be used for comparisons to understand when the end of the sequence has been reached, and will never be dereferenced.
 
-## Test:
+## Test
 In the `main.cpp` file various tests were carried out on both primitive and custom data for each of the methods listed.
 
-## Information:
-The executable has been successfully compiled and tested with no compile or memory errors on Linux Mint 64-bit with the following versions of:
+## Informations
+The executable has been successfully compiled and tested with no compile or memory errors on Linux Mint 64-bit with the following versions of
 - **g++**: 9.4.0
 - **valgrind**: 3.15.0
 - **doxygen**: 1.8.17

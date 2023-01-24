@@ -1,7 +1,38 @@
 # Matrix 3D - Matrix3D<T, F>
 > A template class representing a 3D matrix data structure for any type of data written in C++.
 
-The three-dimensional array has been implemented as a template class having 5 data members:
+## Table of Contents
+
+- [About](#about)
+- [Getters](#getters)
+- [Fundamental methods](#fundamental-methods)
+	- [Default constructor](#default-constructor)
+	- [Copy constructor](#copy-constructor)
+	- [Assignment operator](#assignment-operator)
+	- [Destructor](#destructor)
+- [Secondary constructors](#secondary-constructors)
+	- [Secondary constructor (z, y, x)](#secondary-constructor-z-y-x)
+	- [Secondary constructor (z, y, x, value)](#secondary-constructor-z-y-x-value)
+	- [Conversion constructor](#conversion-constructor)
+- [Member functions](#member-functions)
+	- [Getter/setter of data in a cell [operator()(z, y, x)]](#gettersetter-of-data-in-a-cell-[operatorz-y-x])
+	- [slice(int z1, int z2, int y1, int y2, int x1, int x2)](#sliceint-z1-int-z2-int-y1-int-y2-int-x1-int-x2)
+	- [Equality operator [operator==(const Matrix3D &other)]](#equality-operator-[operator==const-Matrix3D-&other])
+	- [Inequality operator [operator!=(const Matrix3D &other)]](#inequality-operator-[operator!=const-Matrix3D-&other])
+	- [fill()](#fill)
+	- [swap()](#swap)
+	- [clear()](#clear)
+- [Global functions](#global-functions)
+	- [transform(const Matrix3D<T, G> &A)](#transformconst-Matrix3D<T-G>-&A)
+	- [stream operator (operator<<)](#stream-operator-operator<<)
+- [Iterators](#iterators)
+- [Tests](#tests)
+- [Documentation](#documentation)
+- [Informations](#informations)
+
+## About
+
+The three-dimensional matrix has been implemented as a template class having 5 data members:
 
 ```cpp
 T* _matrix;
@@ -24,7 +55,7 @@ In order to access the right data based on its three-dimensional coordinates, it
 
 Let's take for example the box present in the 2nd floor, in the 2nd row and in the 1st column and therefore of place `(1, 1, 0)`, which in the array is at index 7.
 Looking at the graph, it is easy to understand how, to find the index of the data in the array, you have to add:
-- all previous rows in the same plane (number given by the index of the row in which it is located) multiplied by the number of columns of the matrix (and so the cells that are in each row)
+- all previous rows in the same floor (number given by the index of the row in which it is located) multiplied by the number of columns of the matrix (and so the cells that are in each row)
 - all floors preceding the one in which the data is found (number given by the index of the floor in which it is found), multiplied by the number of cells they contain which is given by the multiplication of the 2 dimensions, therefore `rows*columns`.
 
 In this way it is possible to find the number of boxes preceding the row in which the data is in the array, to which by finally adding the remaining index of the corresponding column, one reaches the very cell containing the data one was looking for.
@@ -35,22 +66,29 @@ $$i_{array}=(i_{floor}*n_{rows}*n_{columns})+(i_{row}*n_{columns})+i_{column}$$
 
 As confirmation, the element at indices `(1, 1, 0)` is found in the array in position `(1*2*2) + (1*2) + 1 = 4 + 3 + 1 = 7`, as previously mentioned.
 
+
 ## Fundamental methods
-### Default manufacturer
+
+### Default constructor
 The default constructor creates an empty `Matrix3D` object simply by setting the values of the 3 dimensions to `0` and the array pointer to `nullptr`.
+
 ### Copy constructor
 The copy constructor takes as input another `Matrix3D` object to be copied as a constant reference for efficiency reasons, after which it creates a new identical but distinct object by setting the dimensions to the dimensions of the passed `Matrix3D`, dynamically allocating an array that has a total size equal to the product of the size of the passed matrix and copying the data one by one from the `_matrix` array of the passed matrix into the newly allocated array.
 Since both `new` (although rarely) and copying the data into the newly allocated array may fail (since the data type may be a custom type and the type-redefined assignment operator is not guaranteed to be safe, but it may allocate memory or needing resources and therefore throwing exceptions), these 2 operations are inserted in a try catch block which, in addition to re-throwing the exception to the caller, returns the matrix to a coherent state, canceling any changes made by relying on a `clear()` function defined in the classroom.
+
 ### Assignment operator
-The assignment operator takes as input parameter another `Matrix3D` object as a constant reference for efficiency reasons, as for the copy constructor. After checking that the object being assigned to is not the same one you are trying to assign, it creates a temporary `Matrix3D` copy of the passed one using the copy constructor, after which it relies on a `swap()` function which calls on `this` by passing the temporary array as a parameter. The latter takes care of exchanging member data between the 2 objects. Finally, it returns the dereference of the this pointer to the object.
+The assignment operator takes as input parameter another `Matrix3D` object as a constant reference for efficiency reasons, as for the copy constructor. After checking that the object being assigned to is not the same one you are trying to assign, it creates a temporary `Matrix3D` copy of the passed one using the copy constructor, after which it relies on a `swap()` function which calls on `this` by passing the temporary matrix as a parameter. The latter takes care of exchanging member data between the 2 objects. Finally, it returns the dereference of the this pointer to the object.
+
 ### Destructor
 Called whenever a `Matrix3D` object needs to be destroyed, it does nothing but call the `clear()` function in turn.
 
+
 ## Getters
-Getters are methods that allow you to obtain the dimensions of a `Matrix3D` object. They are all `const` methods in that none of the methods modify the state of the array but simply return a copy of a specific data member related to a dimension.
+Getters are methods that allow you to obtain the dimensions of a `Matrix3D` object. They are all `const` methods in that none of the methods modify the state of the matrix but simply return a copy of a specific data member related to a dimension.
 - **getFloors():** returns the number of floors of a matrix.
 - **getRows():** returns the number of rows of a matrix
 - **getColumns():** returns the number of columns of a matrix.
+
 
 ## Secondary constructors
 
@@ -63,11 +101,12 @@ However, the constructor leaves the data in the cells uninitialized.
 This secondary constructor does everything the previous one does, but in addition it has as a fourth parameter a constant reference to a value of type `T` which it uses to initialize the matrix, assigning it to all its cells.
 For the same reasons listed for the copy constructor, `new` and assignments are also placed in a try catch block.
 
-### Conversion Constructor
+### Conversion constructor
 The constructor in question is a template constructor, which takes as input another 3D matrix of any type as a constant reference, then creates the new matrix of type `<T, F>` setting its dimensions to those of the passed matrix and allocating even memory to that used by the passed matrix.
 Finally, he fills it with the data of the passed matrix converted to type `T` through static_cast, using the data access operator through the 3 indexes that identify the position of a cell.
-The dimensions of the passed array are obtained through the public getters as it is considered a different data type (since it could be of any type).
-As with the copy constructor, memory allocation and assignment are inside a try catch block, which returns the array to a consistent state in case new, assignment, or conversion to type `T` fails.
+The dimensions of the passed matrix are obtained through the public getters as it is considered a different data type (since it could be of any type).
+As with the copy constructor, memory allocation and assignment are inside a try catch block, which returns the matrix to a consistent state in case `new`, assignment, or conversion to type `T` fails.
+
 
 ## Member functions
 
@@ -78,16 +117,16 @@ There is an identical constant version (const) which acts as a getter only to al
 
 ### slice(int z1, int z2, int y1, int y2, int x1, int x2)
 This function takes as input a set of coordinates formed by 6 integers, which in order correspond to:
-- `z1`: coordinate of the plane from which to start cutting
-- `z2`: coordinate of the plane from which to start cutting
+- `z1`: coordinate of the floor from which to start cutting
+- `z2`: coordinate of the floor from which to start cutting
 - `y1`: coordinate of the line from which to start cutting
 - `y2`: coordinate of the line from which to start cutting
 - `x1`: coordinate of the column from which to start cutting
 - `x2`: coordinate of the column from which to start cutting
 
-Logically, the function must return an array that is the part of the array it is applied to that is between the passed coordinates, including the end coordinates.
+Logically, the function must return a matrix that is the part of the matrix it is applied to that is between the passed coordinates, including the end coordinates.
 It then creates a matrix with dimensions equal to `(z2-z1+1, y2-y1+1, x2-x1+1)`, which it fills with the corresponding data taken from the starting matrix, and returns it to the caller.
-The assignment can fail, but on failure and throwing an exception the array is not returned and the object it was called on is not changed, so there is no need to return it to a consistent state.
+The assignment can fail, but on failure and throwing an exception the matrix is not returned and the object it was called on is not changed, so there is no need to return it to a consistent state.
 The function is const in that it does not change the state of the object on which it is called.
 It is assumed that no coordinates negative or greater than the maximum ones of the matrix on which it is applied are passed. It is also assumed that no start coordinates greater than the end coordinates are passed for correct use of the class. Therefore, there are assertions in this regard.
 
@@ -111,6 +150,7 @@ The function takes as input a 3D matrix as a reference for efficiency reasons, a
 ### clear()
 The function empties the `Matrix3D` object on which it is called, deallocating any memory allocated calling `delete[]` on the array pointer, setting the aforementioned pointer to `nullptr` and resetting the 3 dimensions to `0`.
 
+
 ## Global functions
 
 ### transform(const Matrix3D<T, G> &A)
@@ -122,16 +162,26 @@ Finally returns the matrix thus created.
 The redefinition of the stream operator allows direct printing on a stream of a 3D matrix, printing its dimensions and each floor of the matrix with the data it contains.
 It is implemented as a global `friend` function of the class in order to directly access the member data of the matrix to be printed.
 
+
 ## Iterators
 Given the nature of the data structure, the iterators implemented are of the **random access iterator** type.
 Since the internal structure of the `Matrix3D` class is an array, the implementation was done using the pointer trick whereby it is sufficient to remap the `iterator` and `const_iterator` types with `typedef` to pointers to the template data type, and then implement the `begin()` and `end()` functions which expose the iterators of start and end of the data sequence correctly, making them respectively return the pointer to the first data of the array, already present as data member (`_matrix`), and the one pointing to the end of the sequence of data data, i.e. to the cell following the last cell in the array. The position of the last cell corresponds to the initial position to which the size of the array is added (product of the 3 dimensions).
 Although this cell is not part of the matrix array and it is not known what data it contains, this is perfectly safe, as the pointer returned by the `end()` function will only be used for comparisons to understand when the end of the sequence has been reached, and will never be dereferenced.
 
-## Test
+
+## Tests
 In the `main.cpp` file various tests were carried out on both primitive and custom data for each of the methods listed.
+You can go and run it yourself to see some examples of how the class can be used. The file tests basically all the methods of the class, and valgrind gives no error or leaks on it. Just make sure to work with initialized matrixes obviously.
+
+
+## Documentation
+It's possible to generate HTML documentation for the class through the doxygen tool.
+To do so, just install doxygen, open the terminal in the project folder, and run the `doxygen` command. It will automatically search for the Doxyfile which is in the folder and create a new folder containing the newly generated documentation.
+To read it, just go into the folder and open `index.html` with your preferred browser.
+
 
 ## Informations
-The executable has been successfully compiled and tested with no compile or memory errors on Linux Mint 64-bit with the following versions of
+The executable has been successfully compiled and tested with no compile or memory errors on Linux Mint 20.3 64-bit with the following versions of:
 - **g++**: 9.4.0
 - **valgrind**: 3.15.0
 - **doxygen**: 1.8.17

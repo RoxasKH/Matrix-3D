@@ -163,11 +163,11 @@ public:
 	*/
 	Matrix3D &operator=(const Matrix3D &other) {
 		if(this != &other) {
-            Matrix3D tmp(other);
-            this->swap(tmp);
-        }
+			Matrix3D tmp(other);
+			this->swap(tmp);
+		}
 
-        return *this;
+		return *this;
 	}
 
 	/**
@@ -447,9 +447,9 @@ public:
 		try {
 			_matrix = new T[other.getFloors() * other.getRows() * other.getColumns()];
 			for (unsigned int z = 0; z < _floors; ++z)
-		        for (unsigned int y = 0; y < _rows; ++y)
-		            for (unsigned int x = 0; x < _columns; ++x)
-		            	(*this)(z, y, x) = static_cast<U>(other(z, y, x));
+				for (unsigned int y = 0; y < _rows; ++y)
+					for (unsigned int x = 0; x < _columns; ++x)
+						(*this)(z, y, x) = static_cast<U>(other(z, y, x));
 		}
 		catch(...) {
 			clear();
@@ -522,9 +522,9 @@ Matrix3D<Q> trasform(const Matrix3D<T, G> &A) {
 	F functor;
 
 	for (unsigned int z = 0; z < A.getFloors(); ++z)
-        for (unsigned int y = 0; y < A.getRows(); ++y)
-            for (unsigned int x = 0; x < A.getColumns(); ++x)
-            	B(z, y, x) = functor(A(z, y, x));
+		for (unsigned int y = 0; y < A.getRows(); ++y)
+			for (unsigned int x = 0; x < A.getColumns(); ++x)
+				B(z, y, x) = functor(A(z, y, x));
 
 	return B;
 }

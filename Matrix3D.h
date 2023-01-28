@@ -1,5 +1,5 @@
-#ifndef OLIST_H
-#define OLIST_H
+#ifndef MAT3D_H
+#define MAT3D_H
 
 #include <iostream>
 #include <algorithm> //swap

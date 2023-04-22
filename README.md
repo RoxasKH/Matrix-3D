@@ -118,11 +118,11 @@ There is an identical constant version (const) which acts as a getter only to al
 ### slice(int z1, int z2, int y1, int y2, int x1, int x2)
 This function takes as input a set of coordinates formed by 6 integers, which in order correspond to:
 - `z1`: coordinate of the floor from which to start cutting
-- `z2`: coordinate of the floor from which to start cutting
+- `z2`: coordinate of the floor from which to end cutting
 - `y1`: coordinate of the line from which to start cutting
-- `y2`: coordinate of the line from which to start cutting
+- `y2`: coordinate of the line from which to end cutting
 - `x1`: coordinate of the column from which to start cutting
-- `x2`: coordinate of the column from which to start cutting
+- `x2`: coordinate of the column from which to end cutting
 
 Logically, the function must return a matrix that is the part of the matrix it is applied to that is between the passed coordinates, including the end coordinates.
 It then creates a matrix with dimensions equal to `(z2-z1+1, y2-y1+1, x2-x1+1)`, which it fills with the corresponding data taken from the starting matrix, and returns it to the caller.
